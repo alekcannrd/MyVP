@@ -7,12 +7,11 @@
 #include <vector>
 using namespace std;
 
-const int MENUSIZE{3};
-const int TESTSIZE{10};
-
+const int c_iMenuSize{3};
+const int c_iTestSize{10};
 
 //доделано
-Artist generateRandomArtist()
+Artist generate_random_artist()
 {
     string strings[5];
     int ints[3];
@@ -51,11 +50,11 @@ void sort(vector<T> list)
 
 
 //в процессе
-void del(Artist *list, int size, Artist *deleted)
+void del(Artist *list, int size, Artist *deleted) /// <<@todo unused parametr
 {
     for (int i{};i<size;++i)
     {
-        list[i];
+        list[i]; /// <<@todo statement has no effect
     }
 }
 
@@ -78,32 +77,38 @@ void del(Artist *list, int size, Artist *deleted)
 //    return choiced;
 //}
 template <typename T>
-void addFuncMenu(vector<T> list)
+void add_func_menu(vector<T> list)
 {
     //    Artist(string name, string surname, int age, string login, string password,Song* songs, int auditions);
     T temp;
     cin >> temp;
     list.push_back(temp);
 }
+
 template <typename T>
-void printFuncMenu(vector<T> list)
+void print_func_menu(vector<T> list)
 {
     for (int i{}, total = list.size(); i<total; ++i)
     {
         cout << list[i];
     }
 }
+
 template<typename T>
-void callMenu(vector<T> list)
+void call_menu(const vector<T>& crList)
 {
-    MenuItem<T> items[MENUSIZE] = {MenuItem<T>("Add",addFuncMenu,list),MenuItem<T>("Print",printFuncMenu,list),MenuItem<T>("Sort",sort,list)};
-    Menu<T> ArtMenu = Menu<T>("Menu",items,MENUSIZE);
+    MenuItem<T> items[c_iMenuSize] = { MenuItem<T>("Add", add_func_menu, crList),
+                                       MenuItem<T>("Print", print_func_menu, crList),
+                                       MenuItem<T>("Sort", sort, crList) };
+
+    Menu<T> ArtMenu = Menu<T>("Menu", items, c_iMenuSize);
     ArtMenu.run();
 }
-//void callMenu(vector<Artist>& list)
+
+//void call_menu(vector<Artist>& list)
 //{
-//    MenuItem<Artist> items[MENUSIZE] = {MenuItem<Artist>("Add",addFuncMenu,list),MenuItem<Artist>("Print",printFuncMenu,list),MenuItem<Artist>("Sort",sort,list)};
-//    Menu<Artist> ArtMenu = Menu<Artist>("Menu",items,MENUSIZE);
+//    MenuItem<Artist> items[c_iMenuSize] = {MenuItem<Artist>("Add",add_func_menu,list),MenuItem<Artist>("Print",print_func_menu,list),MenuItem<Artist>("Sort",sort,list)};
+//    Menu<Artist> ArtMenu = Menu<Artist>("Menu",items,c_iMenuSize);
 //    ArtMenu.run();
 //}
 //void UsersMenu(vector<RegularUser> list)
@@ -118,7 +123,8 @@ void callMenu(vector<T> list)
 //    Menu SongMenu = Menu("Menu",items,MENUSIZE);
 //    SongMenu.run();
 //}
-void mainMenu(vector<Artist>& artistlist, vector<RegularUser> userlist, vector<Song> songlist)
+
+void main_menu(const vector<Artist>& crArtistlist, vector<RegularUser> userlist, vector<Song> songlist)
 {
     int choice = -1;
     while (choice)
@@ -128,7 +134,16 @@ void mainMenu(vector<Artist>& artistlist, vector<RegularUser> userlist, vector<S
         cin >> choice;
         switch (choice)
         {
-        case 1: callMenu(artistlist); break;
+        case 1:
+        {
+            call_menu(crArtistlist);
+            break;
+        }
+        default:
+        {
+            break;
+        }
+
 //        case 2: callMenu(userlist); break;
 //        case 3: callMenu(songlist); break;
         };
@@ -139,16 +154,18 @@ int main()
 {
     srand(17);
     vector<Artist> artistList;
-        vector<Song> songList;
-        vector<RegularUser> userList;
+    vector<Song> songList;
+    vector<RegularUser> userList;
+
 //    MenuItem mainMenuItems[3] = {MenuItem("Artists",ArtistsMenu(),ARTISTLIST),MenuItem("Users",UsersMenu,USERLIST),MenuItem("Songs",SongsMenu,SONGLIST)};
 
 //    Menu mainMenu("Main menu",mainMenuItems);
-    for (int i{};i<TESTSIZE;++i)
+    for (int i{};i<c_iTestSize;++i)
     {
-        artistList.push_back(generateRandomArtist());
+        artistList.push_back(generate_random_artist());
     };
-    mainMenu(artistList,userList, songList);
+
+    main_menu(artistList,userList, songList);
 
     return 0;
 }
