@@ -40,6 +40,7 @@ public:
     }
     void run()
     {
+//        *m_Function(m_vList);
         m_Function(m_vList);
     }
 //    friend ostream &operator<<(ostream& out, MenuItem& item);
