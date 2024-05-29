@@ -1,0 +1,12 @@
+debug/artist.o
+debug/main.o
+debug/menu.o
+debug/menuitem.o
+debug/myiterator.o
+debug/myvector.o
+debug/regularuser.o
+debug/song.o
+debug/user.o
+debug/BasicUser.o
+debug/Listener.o
+debug/Songwriter.o

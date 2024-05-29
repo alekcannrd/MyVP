@@ -1,0 +1,12 @@
+release/artist.o
+release/main.o
+release/menu.o
+release/menuitem.o
+release/myiterator.o
+release/myvector.o
+release/regularuser.o
+release/song.o
+release/user.o
+release/BasicUser.o
+release/Listener.o
+release/Songwriter.o
