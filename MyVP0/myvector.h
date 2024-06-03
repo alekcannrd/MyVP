@@ -1,7 +1,7 @@
 #pragma once
 #include "myiterator.h"
 #include <iostream>
-
+#include <cassert>
 using namespace std;
 template <typename T>
 class MyVector
@@ -14,13 +14,23 @@ public:
     {
 
     }
-    void push_back(T el)
+    void push_back(const T &el)
     {
-        if (m_uCurrentSize>=m_uSize)
+        try
         {
-            increaseVector();
+            if (m_uCurrentSize>=m_uSize)
+            {
+                throw 1;
+            }
+            m_pList[m_uCurrentSize++] = el;
         }
-        m_pList[m_uCurrentSize++] = el;
+        catch (int id)
+        {
+            if (id == 1)
+            {
+                increaseVector();
+            }
+        }
     }
 
     // возврат итератора на первый элемент
@@ -29,7 +39,7 @@ public:
     }
     // возврат итератора на следующий за последним элемент
     Iterator<T> end() {
-    return Iterator(m_pList+m_uCurrentSize);
+    return begin()+m_uCurrentSize;
     }
 //    // возврат константного итератора на первый элемент
 //    Iterator begin() const {
@@ -39,16 +49,18 @@ public:
 //    Iterator end() const {
 //    return Iterator(m_end);
 //    }
-    void print()
-    {
-        for (unsigned i{};i<m_uCurrentSize;++i)
-        {
-            std::cout << m_pList[i];
-        }
-    }
+//    void print()
+//    {
+//        for (unsigned i{};i<m_uCurrentSize;++i)
+//        {
+//            std::cout << m_pList[i];
+//        }
+//    }
     T& operator[](int index)
     {
-        return m_pList[index];
+        assert(index<m_uCurrentSize||"index more than size of list");
+                return m_pList[index];
+
     }
     unsigned size() const
     {
@@ -56,34 +68,39 @@ public:
     }
     void erase(Iterator<T> it)
     {
-//        for (auto iter = it;iter!=end()-1;++iter)
+        for (auto iter = it;iter!=end()-1;++iter)
+        {
+            std::cout << (*iter)->getId() << std::endl;
+            *iter = *(iter+1);
+        }
+        m_uCurrentSize--;
+//        bool fl{false};
+//        for (int i{};i<m_uCurrentSize;++i)
 //        {
-//            if (iter!=end())
-//            *iter = *(iter+1);
+//            if ((*it).getId()==m_pList[i].getId())
+//            {
+//                fl = true;
+
+//            }
+//            if (fl)
+//            {
+//                if (i!=m_uCurrentSize-1)
+//                {
+//                    m_pList[i] = m_pList[i+1];
+//                }
+//            }
 //        }
-        bool fl{false};
-        for (int i{};i<m_uCurrentSize-1;++i)
-        {
-            if ((*it).getId()==m_pList[i].getId())
-            {
-                fl = true;
+//        if (!fl)
+//        {
+//            std::cout << "Error: doesn't exist";
+//        }
+//        else
+//        {
+//            m_uCurrentSize--;
 
-            }
-            if (fl)
-            {
-                m_pList[i] = m_pList[i+1];
-            }
-        }
-        if (!fl)
-        {
-            std::cout << "Error: doesn't exist";
-        }
-        else
-        {
-            m_uCurrentSize--;
-
-        }
+//        }
     }
+
 
 
 private:

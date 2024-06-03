@@ -6,15 +6,15 @@ Listener::Listener(const UserSettings& crUserSettings)
 
 }
 
-Artist* Listener::getFavoriteArtist() const
-{
-    return m_vpFavoriteArtists;
-}
+//Artist* Listener::getFavoriteArtist() const
+//{
+//    return m_vpFavoriteArtists;
+//}
 
-void Listener::setFavoriteArtist(Artist* crArtists)
-{
-    m_vpFavoriteArtists = crArtists;
-}
+//void Listener::setFavoriteArtist(Artist* crArtists)
+//{
+//    m_vpFavoriteArtists = crArtists;
+//}
 
 bool Listener::operator>(Listener &b) const
 {
@@ -44,8 +44,7 @@ istream &operator>>(istream &in, Listener &listener)
 ostream &operator<<(ostream &out, Listener listener)
 {
     out << listener.getId() << ' ' << listener.getUserName() << ' ' << listener.getUserLastName() << endl;
-
-        out << listener.m_vpFavoriteArtists->getUserName() << ' ' << listener.m_vpFavoriteArtists->getUserLastName() << endl;
+    out << *listener.getFavSong();
 
     return out;
 }

@@ -4,7 +4,6 @@ template<typename T>
 class Iterator {
 // делаем внешний класс дружественным к подклассу
 // чтобы он имел доступ к нашим закрытым свойствам
-friend class Vector;
 public:
 // пишем конструктор копирования
 // который будет производить инициализацию членов класса
@@ -27,13 +26,16 @@ Iterator& operator--() {
 --m_pElement;
 return *this;
 }
-Iterator& operator-(int a) {
-m_pElement-=a;
-return *this;
+Iterator operator-(int a)
+{
+
+    Iterator<T> as = Iterator(m_pElement-a);
+return as;
 }
-Iterator& operator+(int a) {
-m_pElement+=a;
-return *this;
+Iterator operator+(int a)
+{
+    Iterator<T> as = Iterator(m_pElement+a);
+return as;
 }
 // перегружаем оператор разыменования указателя
 T& operator*()  {

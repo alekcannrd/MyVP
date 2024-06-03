@@ -11,14 +11,20 @@ class Listener : public BasicUser
 public:
     Listener() {}
     Listener(const UserSettings& crUserSettings);
-    Artist* getFavoriteArtist() const;
-    void setFavoriteArtist(Artist* crArtists);
+    void setFavSong(Song* a)
+    {
+        m_pFavSong = a;
+    }
+    Song* const & getFavSong() const
+    {
+        return m_pFavSong;
+    }
     friend ostream& operator<<(ostream& out, Listener listener) ;
     friend istream &operator>>(istream &in, Listener &listener);
     bool operator>(Listener &b) const;
 
     bool operator<(Listener &b) const;
 private:
-   Artist* m_vpFavoriteArtists;
+   Song* m_pFavSong;
 
 };
